@@ -1,4 +1,3 @@
-#include<Arduino.h>
 #include"FIBO_V01_Motor_Driver.h"
 #include <pio_encoder.h>
 
@@ -35,15 +34,16 @@ void Motor :: begin() {
 }
 
 void Motor :: setDutycycle(int dutycycle) {
+    dutycycle = min(max(-225, dutycycle), 225);
     if(dutycycle > 0){ 
         digitalWrite(ENB, LOW);
         analogWrite(HIGH_PIN, dutycycle);
-        digitalWrite(LOW_PIN, LOW);
+        analogWrite(LOW_PIN, 0);
     } 
     else if(dutycycle < 0){ 
         digitalWrite(ENB, LOW);
-        digitalWrite(HIGH_PIN, LOW);
-        analogWrite(LOW_PIN, -dutycycle);
+        analogWrite(HIGH_PIN, 0);
+        analogWrite(LOW_PIN, abs(dutycycle));
     }else{
         digitalWrite(ENB, HIGH);
         digitalWrite(HIGH_PIN, LOW);
@@ -71,4 +71,8 @@ double Motor :: getRevolution(){
 
 int Motor ::getDutycycle(){
     return dutycycle;
+}
+
+int Motor :: getPPR(){
+    return pulsesPerRevolution;
 }

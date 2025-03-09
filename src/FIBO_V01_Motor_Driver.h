@@ -1,6 +1,9 @@
 #include<Arduino.h>
 #include "pio_encoder.h"
 
+#ifndef FIBO_V01_MOTOR_DRIVER_H
+#define FIBO_V01_MOTOR_DRIVER_H
+
 class Motor{
     private :
         uint8_t ENB, HIGH_PIN, LOW_PIN, ENC_A, ENC_B, HOMING;
@@ -23,5 +26,8 @@ class Motor{
         void setPPR(int pulsesPerRevolution);
         int getDutycycle();
         // controll function 
-        void setDutycycle(int dutycycle);     
+        void setDutycycle(int dutycycle);   
+        int getPPR();  
 };
+
+#endif // FIBO_V01_MOTOR_DRIVER_H
